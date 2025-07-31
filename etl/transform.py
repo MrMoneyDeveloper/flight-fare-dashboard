@@ -82,4 +82,21 @@ def write_gold(df: pd.DataFrame, out_dir: Path) -> None:
 # ---------------------------------------------------------------------------#
 def main() -> None:
     p = argparse.ArgumentParser()
-    p.add_argu_
+    p.add_argument("--in_dir", type=Path, default=Path("data/bronze"),
+                   help="Input folder containing bronze Parquet")
+    p.add_argument("--out_dir", type=Path, default=Path("data/gold"),
+                   help="Output folder for gold Parquet")
+    args = p.parse_args()
+
+    try:
+        df = load_bronze(args.in_dir)
+        df = normalise(df)
+        quality_gate(df)
+        write_gold(df, args.out_dir)
+    except Exception as exc:
+        log.exception("Transform failed: %s", exc)
+        raise SystemExit(1)
+
+
+if __name__ == "__main__":
+    main()
