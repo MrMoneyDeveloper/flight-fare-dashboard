@@ -2,3 +2,4 @@
 ui/node_modules/
 node_modules/
 data/**/*.parquet
+__pycache__/

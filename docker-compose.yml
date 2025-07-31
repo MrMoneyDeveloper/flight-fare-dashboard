@@ -1,0 +1,26 @@
+version: '3.8'
+services:
+  api:
+    image: mcr.microsoft.com/dotnet/sdk:8.0
+    working_dir: /src/api
+    volumes:
+      - ./api:/src/api
+      - ./data:/src/data
+    command: ["dotnet", "run", "--urls", "http://0.0.0.0:8080"]
+    ports:
+      - "8000:8080"
+
+  etl:
+    image: python:3.12-slim
+    working_dir: /src/etl
+    volumes:
+      - ./etl:/src/etl
+      - ./data:/src/data
+    command: ["sleep", "infinity"]
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "8080:80"
+    volumes:
+      - ./ui:/usr/share/nginx/html:ro

@@ -1,0 +1,5 @@
+pandas
+polars
+duckdb
+pyarrow
+great_expectations
