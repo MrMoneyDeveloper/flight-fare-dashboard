@@ -546,11 +546,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Workspace\\flight-fare-dashboard\\FlightFareApi\\FlightFareApi.csproj",
+      "projectUniqueName": "c:\\Workspace\\flight-fare-dashboard\\FlightFareApi\\FlightFareApi.csproj",
       "projectName": "FlightFareApi",
-      "projectPath": "C:\\Workspace\\flight-fare-dashboard\\FlightFareApi\\FlightFareApi.csproj",
+      "projectPath": "c:\\Workspace\\flight-fare-dashboard\\FlightFareApi\\FlightFareApi.csproj",
       "packagesPath": "C:\\Users\\itsup\\.nuget\\packages\\",
-      "outputPath": "C:\\Workspace\\flight-fare-dashboard\\FlightFareApi\\obj\\",
+      "outputPath": "c:\\Workspace\\flight-fare-dashboard\\FlightFareApi\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
