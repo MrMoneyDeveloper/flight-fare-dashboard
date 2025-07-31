@@ -6,6 +6,7 @@ using Dapper;
 using DuckDB.NET.Data;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.OpenApi.Models;
+using FlightFareApi.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,6 +31,7 @@ builder.Services.AddSingleton<IDbConnection>(sp =>
     conn.Open();
     return conn;
 });
+builder.Services.AddSingleton<FlightRepository>();
 
 builder.Services.AddSignalR();
 builder.Services.AddEndpointsApiExplorer();
@@ -97,6 +99,15 @@ app.MapGet("/prices/history", async (IDbConnection conn) =>
 })
 .WithName("PriceHistory")
 .WithTags("Prices");
+
+// Latest flights using repository
+app.MapGet("/flights/latest", async (FlightRepository repo) =>
+{
+    var rows = await repo.GetLatestFlightsAsync();
+    return Results.Ok(rows);
+})
+.WithName("LatestFlights")
+.WithTags("Flights");
 
 // Endpoint to broadcast a manual message (demo only)
 app.MapPost("/broadcast", async (BroadcastRequest req, IHubContext<LiveFeedHub> hub) =>
