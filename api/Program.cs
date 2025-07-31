@@ -1,5 +1,5 @@
 // ********************************************************************
-//  FlightFareApi – Minimal API bootstrap
+//  API – Minimal API bootstrap
 // ********************************************************************
 using System.Data;
 using Dapper;
