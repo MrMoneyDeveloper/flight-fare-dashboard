@@ -1,0 +1,21 @@
+{
+  "name": "flight-fare-dashboard",
+  "version": "1.0.0",
+  "description": "*Keep the original “messy-to-insight” storyline, swap the relational DB for **columnar Parquet storage**, and layer in richer data-science touches (eight flavours of normalisation + eight distinct visualisations).*",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4.1.11"
+  },
+  "dependencies": {
+    "chart.js": "^4.5.0",
+    "htmx.org": "^2.0.6"
+  }
+}
