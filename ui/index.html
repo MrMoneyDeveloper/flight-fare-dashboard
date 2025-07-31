@@ -8,32 +8,33 @@
   <link rel="stylesheet" href="public/tailwind.css" />
 
   <!-- Chart.js & HTMX CDN helpers -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
-  <script src="https://unpkg.com/htmx.org@1.9.12"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+  <script defer src="https://unpkg.com/htmx.org@1.9.12"></script>
 </head>
 
-<body class="h-full bg-slate-50 text-gray-800">
-  <header class="p-4 bg-indigo-600 text-white shadow-md">
+<body class="h-full bg-slate-50 text-gray-800 dark:bg-gray-900 dark:text-gray-100">
+  <header class="p-4 bg-indigo-500 dark:bg-indigo-700 text-white shadow-md flex items-center gap-4">
     <h1 class="text-2xl font-semibold">✈️ Flight-Fare Intelligence Dashboard</h1>
     <p class="text-sm opacity-80">Live data quality & price analytics</p>
+    <button id="theme-toggle" class="ml-auto px-3 py-1 rounded bg-white/20 text-sm hover:bg-white/30">🌓</button>
   </header>
 
   <!-- KPI cards -->
   <section class="grid grid-cols-2 md:grid-cols-4 gap-4 p-4" id="kpi-cards">
     <!-- These cards can be hydrated via HTMX polling / websocket -->
-    <div class="bg-white rounded-xl shadow p-4 flex flex-col">
+    <div class="bg-white dark:bg-slate-800 rounded-xl shadow p-4 flex flex-col">
       <span class="text-sm text-slate-500">Rows ingested</span>
       <span id="kpi-rows" class="text-3xl font-bold mt-auto">---</span>
     </div>
-    <div class="bg-white rounded-xl shadow p-4 flex flex-col">
+    <div class="bg-white dark:bg-slate-800 rounded-xl shadow p-4 flex flex-col">
       <span class="text-sm text-slate-500">Null-rate</span>
       <span id="kpi-null" class="text-3xl font-bold mt-auto">---</span>
     </div>
-    <div class="bg-white rounded-xl shadow p-4 flex flex-col">
+    <div class="bg-white dark:bg-slate-800 rounded-xl shadow p-4 flex flex-col">
       <span class="text-sm text-slate-500">Avg. price (ZAR)</span>
       <span id="kpi-price" class="text-3xl font-bold mt-auto">---</span>
     </div>
-    <div class="bg-white rounded-xl shadow p-4 flex flex-col">
+    <div class="bg-white dark:bg-slate-800 rounded-xl shadow p-4 flex flex-col">
       <span class="text-sm text-slate-500">Live latency (ms)</span>
       <span id="kpi-latency" class="text-3xl font-bold mt-auto">---</span>
     </div>
@@ -42,43 +43,61 @@
   <!-- Charts grid -->
   <main class="grid grid-cols-1 xl:grid-cols-2 gap-6 p-4">
     <!-- 1 ▸ Line chart   -->
-    <article class="bg-white rounded-xl shadow p-4">
+    <article class="bg-white dark:bg-slate-800 rounded-xl shadow p-4">
       <h2 class="font-medium mb-2">Median Price vs Days-Left</h2>
-      <canvas id="chart-line"></canvas>
+      <div class="relative">
+        <div id="skeleton-line" class="absolute inset-0 rounded-lg bg-slate-200 dark:bg-slate-700 animate-pulse"></div>
+        <canvas id="chart-line" class="hidden"></canvas>
+      </div>
     </article>
 
     <!-- 2 ▸ Box-Whisker (uses Chart.js box-plot plugin) -->
-    <article class="bg-white rounded-xl shadow p-4">
+    <article class="bg-white dark:bg-slate-800 rounded-xl shadow p-4">
       <h2 class="font-medium mb-2">Fare Distribution per Airline</h2>
-      <canvas id="chart-box"></canvas>
+      <div class="relative">
+        <div id="skeleton-box" class="absolute inset-0 rounded-lg bg-slate-200 dark:bg-slate-700 animate-pulse"></div>
+        <canvas id="chart-box" class="hidden"></canvas>
+      </div>
     </article>
 
     <!-- 3 ▸ Heat-map calendar -->
-    <article class="bg-white rounded-xl shadow p-4">
+    <article class="bg-white dark:bg-slate-800 rounded-xl shadow p-4">
       <h2 class="font-medium mb-2">Seasonality Heat-Map</h2>
-      <canvas id="chart-heat"></canvas>
+      <div class="relative">
+        <div id="skeleton-heat" class="absolute inset-0 rounded-lg bg-slate-200 dark:bg-slate-700 animate-pulse"></div>
+        <canvas id="chart-heat" class="hidden"></canvas>
+      </div>
     </article>
 
     <!-- 4 ▸ Stacked area -->
-    <article class="bg-white rounded-xl shadow p-4">
+    <article class="bg-white dark:bg-slate-800 rounded-xl shadow p-4">
       <h2 class="font-medium mb-2">Class Mix Over Time</h2>
-      <canvas id="chart-area"></canvas>
+      <div class="relative">
+        <div id="skeleton-area" class="absolute inset-0 rounded-lg bg-slate-200 dark:bg-slate-700 animate-pulse"></div>
+        <canvas id="chart-area" class="hidden"></canvas>
+      </div>
     </article>
 
     <!-- 5 ▸ Violin plot (same plugin as box plot) -->
-    <article class="bg-white rounded-xl shadow p-4">
+    <article class="bg-white dark:bg-slate-800 rounded-xl shadow p-4">
       <h2 class="font-medium mb-2">Duration by Stops (Violin)</h2>
-      <canvas id="chart-violin"></canvas>
+      <div class="relative">
+        <div id="skeleton-violin" class="absolute inset-0 rounded-lg bg-slate-200 dark:bg-slate-700 animate-pulse"></div>
+        <canvas id="chart-violin" class="hidden"></canvas>
+      </div>
     </article>
 
     <!-- 6 ▸ Radar chart -->
-    <article class="bg-white rounded-xl shadow p-4">
+    <article class="bg-white dark:bg-slate-800 rounded-xl shadow p-4">
       <h2 class="font-medium mb-2">Airline Multi-Metric Radar</h2>
-      <canvas id="chart-radar"></canvas>
+      <div class="relative">
+        <div id="skeleton-radar" class="absolute inset-0 rounded-lg bg-slate-200 dark:bg-slate-700 animate-pulse"></div>
+        <canvas id="chart-radar" class="hidden"></canvas>
+      </div>
     </article>
 
     <!-- 7 ▸ Bullet / Progress cards (reuse KPI cards or embed mini bar) -->
-    <article class="bg-white rounded-xl shadow p-4 flex flex-col">
+    <article class="bg-white dark:bg-slate-800 rounded-xl shadow p-4 flex flex-col">
       <h2 class="font-medium mb-2">Data-Quality Bullet</h2>
       <div class="h-4 w-full bg-slate-200 rounded">
         <div id="bullet-quality" class="h-full bg-emerald-500 rounded" style="width:0%"></div>
@@ -87,7 +106,7 @@
     </article>
 
     <!-- 8 ▸ Live ticker table -->
-    <article class="bg-white rounded-xl shadow p-4 overflow-y-auto max-h-80">
+    <article class="bg-white dark:bg-slate-800 rounded-xl shadow p-4 overflow-y-auto max-h-80">
       <h2 class="font-medium mb-2">Live Fare Stream</h2>
       <table class="min-w-full text-sm">
         <thead><tr class="text-left text-slate-500">
@@ -114,6 +133,19 @@
 
     // ... repeat for other charts (box, heat, area, violin, radar)
     // For brevity only line chart scaffolded here.
+
+    // Remove skeletons once charts render
+    document.querySelectorAll('[id^="skeleton-"]').forEach(el => el.remove());
+    document.querySelectorAll('canvas').forEach(c => c.classList.remove('hidden'));
+
+    // Theme toggle
+    const html = document.documentElement;
+    const toggle = document.getElementById('theme-toggle');
+    if (localStorage.theme === 'dark') html.classList.add('dark');
+    toggle.addEventListener('click', () => {
+      html.classList.toggle('dark');
+      localStorage.theme = html.classList.contains('dark') ? 'dark' : 'light';
+    });
 
     /* Live ticker mock */
     let counter = 0;
