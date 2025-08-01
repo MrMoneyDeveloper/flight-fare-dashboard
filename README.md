@@ -5,6 +5,8 @@ This demo project turns a raw airline fare CSV into a set of interactive charts.
 ## Quick start
 
 You can run everything individually or let the helper script handle it all.
+The script now launches the API and static web server directly on your
+machine – no Docker required.
 
 ```bash
 ./run_all.sh
@@ -26,8 +28,10 @@ npm install
 npx tailwindcss -o public/tailwind.css --minify
 cd ..
 
-# 4. Start API and dashboard
-docker compose up --build
+# 4. Start API and dashboard locally
+#    (requires the .NET 8 SDK and Python 3 installed)
+dotnet run --project api --urls http://localhost:8000 &
+python -m http.server 8080 --directory ui
 
 # (Optional) emit a live JSON feed
 python etl/stream_simulator.py --gold data/gold/flights_gold_*.parquet
