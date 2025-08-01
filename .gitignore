@@ -1,5 +1,6 @@
 .venv/
 ui/node_modules/
 node_modules/
+ui/public/
 data/**/*.parquet
 __pycache__/

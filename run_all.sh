@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -uo pipefail
 
-LOGFILE="run_all.log"
+LOGFILE="$(pwd)/run_all.log"
 : > "$LOGFILE"
 
 # Colour helpers ------------------------------------------------------------
