@@ -5,6 +5,9 @@ using System.Data;
 using Dapper;
 using DuckDB.NET.Data;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using FlightFareApi.Repositories;
 
