@@ -4,7 +4,13 @@ This demo project turns a raw airline fare CSV into a set of interactive charts.
 
 ## Quick start
 
-Run the following commands from the repo root to generate data and launch the dashboard.
+You can run everything individually or let the helper script handle it all.
+
+```bash
+./run_all.sh
+```
+
+Run the following commands from the repo root to generate data and launch the dashboard manually.
 
 ```bash
 # 1. Python dependencies
