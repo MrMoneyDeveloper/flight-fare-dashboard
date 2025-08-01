@@ -4,18 +4,24 @@ set -uo pipefail
 LOGFILE="run_all.log"
 : > "$LOGFILE"
 
+# Colour helpers ------------------------------------------------------------
+COL_RESET="\033[0m"
+COL_INFO="\033[36m"   # cyan
+COL_ERR="\033[31m"    # red
+
 log() {
-  echo "[$(date +'%Y-%m-%d %H:%M:%S')] $*" | tee -a "$LOGFILE"
+  printf "%b[%s]%b %s\n" "$COL_INFO" "$(date +'%Y-%m-%d %H:%M:%S')" \
+    "$COL_RESET" "$*" | tee -a "$LOGFILE"
 }
 
-trap 'log "ERROR: script failed at line $LINENO"; exit 1' ERR
+trap 'log "${COL_ERR}ERROR: script failed at line $LINENO${COL_RESET}"; exit 1' ERR
 
 run_cmd() {
   log "Executing: $*"
-  "$@" >> "$LOGFILE" 2>&1
-  local status=$?
+  "$@" 2>&1 | tee -a "$LOGFILE"
+  local status=${PIPESTATUS[0]}
   if [ $status -ne 0 ]; then
-    log "Command failed (exit $status): $*"
+    log "${COL_ERR}Command failed (exit $status): $*${COL_RESET}"
     exit $status
   fi
   log "Command succeeded: $*"
@@ -26,12 +32,15 @@ run_cmd pip install -r requirements.txt
 run_cmd python etl/extract_excel.py --source data/raw/airlines_flights_data.csv
 run_cmd python etl/transform.py
 
-pushd ui >> "$LOGFILE"
+log "Building UI assets..."
+pushd ui > /dev/null
 run_cmd npm install
 run_cmd npx tailwindcss -o public/tailwind.css --minify
-popd >> "$LOGFILE"
+popd > /dev/null
 
+log "Starting containers..."
 run_cmd docker compose up --build -d
+log "Containers running. Use 'docker compose logs -f' to follow output." 
 
 log "Checking dashboard availability..."
 for i in {1..10}; do
@@ -49,6 +58,8 @@ if command -v xdg-open >/dev/null; then
   xdg-open http://localhost:8080 >> "$LOGFILE" 2>&1 &
 elif command -v open >/dev/null; then
   open http://localhost:8080 >> "$LOGFILE" 2>&1 &
+elif command -v python >/dev/null; then
+  python -m webbrowser http://localhost:8080 >> "$LOGFILE" 2>&1 &
 else
   log "Could not detect a method to open a browser automatically."
 fi
