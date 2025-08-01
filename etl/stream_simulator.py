@@ -35,6 +35,7 @@ def pick_latest_gold(pattern: str) -> Path:
 def stream(df: pd.DataFrame, rate: float) -> None:
     """Emit one row every `1/rate` seconds (approx)."""
     delay = 1 / rate
+    log.info("Starting stream loop with delay %.2fs", delay)
     try:
         while True:
             row = df.sample(1).to_dict(orient="records")[0]
@@ -43,6 +44,8 @@ def stream(df: pd.DataFrame, rate: float) -> None:
             time.sleep(delay)
     except KeyboardInterrupt:
         log.info("Stopped by user.")
+    finally:
+        log.info("Stream loop ended")
 
 
 # ---------------------------------------------------------------------------#
@@ -54,6 +57,11 @@ def main() -> None:
                    help="Rows per second to emit")
     args = p.parse_args()
 
+    log.info(
+        "Simulator starting with pattern %s at %.2f rows/sec",
+        args.gold,
+        args.rate,
+    )
     try:
         gold_path = pick_latest_gold(args.gold)
         df = pd.read_parquet(gold_path)
