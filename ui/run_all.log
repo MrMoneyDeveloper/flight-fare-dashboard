@@ -1,0 +1,13 @@
+[2025-08-01 22:49:25] Executing: npm install
+
+up to date, audited 19 packages in 2s
+
+7 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+[2025-08-01 22:49:30] Command succeeded: npm install
+[2025-08-01 22:49:30] Executing: npx tailwindcss -o public/tailwind.css --minify
+npm error could not determine executable to run
+npm error A complete log of this run can be found in: C:\Users\itsup\AppData\Local\npm-cache\_logs\2025-08-01T20_49_31_835Z-debug-0.log
+[2025-08-01 22:49:32] Command failed (exit 1): npx tailwindcss -o public/tailwind.css --minify
