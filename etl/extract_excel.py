@@ -54,9 +54,11 @@ def main() -> None:
                         help="Output folder for bronze Parquet")
     args = parser.parse_args()
 
+    log.info("Starting extraction from %s to %s", args.source, args.out_dir)
     try:
         df = read_source(args.source)
         write_parquet(df, args.out_dir)
+        log.info("Extraction completed successfully.")
     except Exception as exc:
         log.exception("Extraction failed: %s", exc)
         raise SystemExit(1)

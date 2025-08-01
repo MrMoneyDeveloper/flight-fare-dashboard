@@ -88,11 +88,15 @@ def main() -> None:
                    help="Output folder for gold Parquet")
     args = p.parse_args()
 
+    log.info(
+        "Starting transform from %s to %s", args.in_dir, args.out_dir
+    )
     try:
         df = load_bronze(args.in_dir)
         df = normalise(df)
         quality_gate(df)
         write_gold(df, args.out_dir)
+        log.info("Transform completed successfully.")
     except Exception as exc:
         log.exception("Transform failed: %s", exc)
         raise SystemExit(1)

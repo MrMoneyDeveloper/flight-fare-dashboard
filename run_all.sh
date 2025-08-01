@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -euo pipefail
+set -uo pipefail
 
 LOGFILE="run_all.log"
 : > "$LOGFILE"
@@ -10,25 +10,28 @@ log() {
 
 trap 'log "ERROR: script failed at line $LINENO"; exit 1' ERR
 
-log "Installing Python dependencies..."
-pip install -r requirements.txt >> "$LOGFILE" 2>&1
-log "Python dependencies installed successfully."
+run_cmd() {
+  log "Executing: $*"
+  "$@" >> "$LOGFILE" 2>&1
+  local status=$?
+  if [ $status -ne 0 ]; then
+    log "Command failed (exit $status): $*"
+    exit $status
+  fi
+  log "Command succeeded: $*"
+}
 
-log "Extracting and transforming data..."
-python etl/extract_excel.py --source data/raw/airlines_flights_data.csv >> "$LOGFILE" 2>&1
-python etl/transform.py >> "$LOGFILE" 2>&1
-log "Data transformation complete."
+run_cmd pip install -r requirements.txt
 
-log "Building Tailwind CSS..."
+run_cmd python etl/extract_excel.py --source data/raw/airlines_flights_data.csv
+run_cmd python etl/transform.py
+
 pushd ui >> "$LOGFILE"
-npm install >> "$LOGFILE" 2>&1
-npx tailwindcss -o public/tailwind.css --minify >> "$LOGFILE" 2>&1
+run_cmd npm install
+run_cmd npx tailwindcss -o public/tailwind.css --minify
 popd >> "$LOGFILE"
-log "Tailwind build complete."
 
-log "Starting containers with Docker Compose..."
-docker compose up --build -d >> "$LOGFILE" 2>&1
-log "Docker containers started."
+run_cmd docker compose up --build -d
 
 log "Checking dashboard availability..."
 for i in {1..10}; do
