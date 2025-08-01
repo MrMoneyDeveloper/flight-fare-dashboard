@@ -38,9 +38,20 @@ run_cmd npm install
 run_cmd npx tailwindcss -o public/tailwind.css --minify
 popd > /dev/null
 
-log "Starting containers..."
-run_cmd docker compose up --build -d
-log "Containers running. Use 'docker compose logs -f' to follow output." 
+log "Starting API..."
+pushd api > /dev/null
+dotnet run --urls http://localhost:8000 >> ../run_all.log 2>&1 &
+API_PID=$!
+popd > /dev/null
+
+log "Starting local web server..."
+pushd ui > /dev/null
+python3 -m http.server 8080 >> ../run_all.log 2>&1 &
+UI_PID=$!
+popd > /dev/null
+
+trap 'log "Stopping..."; kill $API_PID $UI_PID' EXIT
+log "Processes started. API on http://localhost:8000, dashboard on http://localhost:8080"
 
 log "Checking dashboard availability..."
 for i in {1..10}; do
@@ -65,3 +76,4 @@ else
 fi
 
 log "All done. Access the dashboard at http://localhost:8080"
+wait $API_PID $UI_PID
