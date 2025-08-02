@@ -21,6 +21,8 @@
     <button id="theme-toggle" class="ml-auto px-3 py-1 rounded bg-white/20 text-sm hover:bg-white/30">🌓</button>
   </header>
 
+  <p id="data-warning" class="p-4 text-center text-red-600"></p>
+
   <!-- KPI cards -->
   <section class="grid grid-cols-2 md:grid-cols-4 gap-4 p-4" id="kpi-cards">
     <!-- These cards can be hydrated via HTMX polling / websocket -->
@@ -125,6 +127,27 @@
        Quick demo data — replace with real fetch/websocket hookups later
     ------------------------------------------------------------------ */
     const ctx = id => document.getElementById(id);
+
+    const warn = msg => {
+      console.warn(msg);
+      document.getElementById('data-warning').textContent = msg;
+    };
+
+    (async () => {
+      try {
+        const res = await fetch('http://localhost:8000/prices/history');
+        if (!res.ok) throw new Error(res.statusText);
+        const data = await res.json();
+        if (!Array.isArray(data) || data.length === 0) {
+          warn('No data available from API');
+        } else {
+          console.log('Loaded sample data', data.slice(0, 3));
+        }
+      } catch (err) {
+        warn('Failed to load data from API');
+        console.error(err);
+      }
+    })();
 
     // 1 ▸ Line chart
     new Chart(ctx('chart-line'), {
