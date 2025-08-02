@@ -1,4 +1,4 @@
-[36m[2025-08-02 10:24:44][0m Executing: pip install -r requirements.txt
+[36m[2025-08-02 10:38:26][0m Executing: pip install -r requirements.txt
 Requirement already satisfied: pandas in c:\workspace\flight-fare-dashboard\.venv\lib\site-packages (from -r requirements.txt (line 1)) (2.1.4)
 Requirement already satisfied: polars in c:\workspace\flight-fare-dashboard\.venv\lib\site-packages (from -r requirements.txt (line 2)) (1.31.0)
 Requirement already satisfied: duckdb in c:\workspace\flight-fare-dashboard\.venv\lib\site-packages (from -r requirements.txt (line 3)) (1.3.2)
@@ -45,24 +45,24 @@ Requirement already satisfied: pydantic-core==2.33.2 in c:\workspace\flight-fare
 Requirement already satisfied: typing-inspection>=0.4.0 in c:\workspace\flight-fare-dashboard\.venv\lib\site-packages (from pydantic>=1.10.7->great_expectations->-r requirements.txt (line 5)) (0.4.1)
 Requirement already satisfied: ruamel.yaml.clib>=0.2.7 in c:\workspace\flight-fare-dashboard\.venv\lib\site-packages (from ruamel.yaml>=0.16->great_expectations->-r requirements.txt (line 5)) (0.2.12)
 Requirement already satisfied: colorama in c:\workspace\flight-fare-dashboard\.venv\lib\site-packages (from tqdm>=4.59.0->great_expectations->-r requirements.txt (line 5)) (0.4.6)
-[36m[2025-08-02 10:24:46][0m Command succeeded: pip install -r requirements.txt
-[36m[2025-08-02 10:24:46][0m Executing (non-fatal): python etl/extract_excel.py --source data/raw/airlines_flights_data.csv
-2025-08-02 10:24:47,399 | INFO     | Starting extraction from data\raw\airlines_flights_data.csv to data\bronze
-2025-08-02 10:24:47,399 | INFO     | Loading raw file (attempt 1): data\raw\airlines_flights_data.csv
-2025-08-02 10:24:47,738 | INFO     | Loaded 300153 rows × 12 cols
-2025-08-02 10:24:48,114 | INFO     | Wrote bronze Parquet to data\bronze\2025-08
-2025-08-02 10:24:48,114 | INFO     | Extraction completed successfully.
-[36m[2025-08-02 10:24:48][0m Command succeeded: python etl/extract_excel.py --source data/raw/airlines_flights_data.csv
-[36m[2025-08-02 10:24:48][0m Executing (non-fatal): python etl/transform.py
-2025-08-02 10:24:49,037 | INFO | Starting transform from data\bronze to data\gold
-2025-08-02 10:24:49,037 | INFO | Reading bronze data: data\bronze\2025-08\flights_bronze.parquet
-2025-08-02 10:24:49,509 | INFO | Applied all transformations.
-2025-08-02 10:24:49,570 | INFO | Null-rate 0.00% within threshold
-2025-08-02 10:24:49,952 | INFO | Wrote gold Parquet: data\gold\flights_gold_2025-08-02_1024.parquet
-2025-08-02 10:24:49,952 | INFO | Transform completed successfully.
-[36m[2025-08-02 10:24:50][0m Command succeeded: python etl/transform.py
-[36m[2025-08-02 10:24:50][0m Building UI assets...
-[36m[2025-08-02 10:24:50][0m Executing: npm install
+[36m[2025-08-02 10:38:28][0m Command succeeded: pip install -r requirements.txt
+[36m[2025-08-02 10:38:28][0m Executing (non-fatal): python etl/extract_excel.py --source data/raw/airlines_flights_data.csv
+2025-08-02 10:38:29,529 | INFO     | Starting extraction from data\raw\airlines_flights_data.csv to data\bronze
+2025-08-02 10:38:29,529 | INFO     | Loading raw file (attempt 1): data\raw\airlines_flights_data.csv
+2025-08-02 10:38:29,857 | INFO     | Loaded 300153 rows × 12 cols
+2025-08-02 10:38:30,233 | INFO     | Wrote bronze Parquet to data\bronze\2025-08
+2025-08-02 10:38:30,233 | INFO     | Extraction completed successfully.
+[36m[2025-08-02 10:38:30][0m Command succeeded: python etl/extract_excel.py --source data/raw/airlines_flights_data.csv
+[36m[2025-08-02 10:38:30][0m Executing (non-fatal): python etl/transform.py
+2025-08-02 10:38:31,201 | INFO | Starting transform from data\bronze to data\gold
+2025-08-02 10:38:31,201 | INFO | Reading bronze data: data\bronze\2025-08\flights_bronze.parquet
+2025-08-02 10:38:31,742 | INFO | Applied all transformations.
+2025-08-02 10:38:31,807 | INFO | Null-rate 0.00% within threshold
+2025-08-02 10:38:32,220 | INFO | Wrote gold Parquet: data\gold\flights_gold_2025-08-02_1038.parquet
+2025-08-02 10:38:32,220 | INFO | Transform completed successfully.
+[36m[2025-08-02 10:38:32][0m Command succeeded: python etl/transform.py
+[36m[2025-08-02 10:38:32][0m Building UI assets...
+[36m[2025-08-02 10:38:32][0m Executing: npm install
 
 up to date, audited 57 packages in 1s
 
@@ -70,13 +70,13 @@ up to date, audited 57 packages in 1s
   run `npm fund` for details
 
 found 0 vulnerabilities
-[36m[2025-08-02 10:24:52][0m Command succeeded: npm install
-[36m[2025-08-02 10:24:52][0m Executing: npx tailwindcss -o public/tailwind.css --minify
+[36m[2025-08-02 10:38:34][0m Command succeeded: npm install
+[36m[2025-08-02 10:38:34][0m Executing: npx tailwindcss -o public/tailwind.css --minify
 [3m[1m[34mâ‰ˆ[39m[22m[23m tailwindcss [34mv4.1.11[39m
 
-Done in [34m57ms[39m
-[36m[2025-08-02 10:24:54][0m Command succeeded: npx tailwindcss -o public/tailwind.css --minify
-[36m[2025-08-02 10:24:54][0m Starting API...
+Done in [34m52ms[39m
+[36m[2025-08-02 10:38:36][0m Command succeeded: npx tailwindcss -o public/tailwind.css --minify
+[36m[2025-08-02 10:38:36][0m Starting API...
 Building...
 C:\Workspace\flight-fare-dashboard\api\FlightFareApi.csproj : warning NU1603: FlightFareApi depends on Swashbuckle.AspNetCore (>= 6.6.7) but Swashbuckle.AspNetCore 6.6.7 was not found. An approximate best match of Swashbuckle.AspNetCore 6.7.0 was resolved.
 C:\Workspace\flight-fare-dashboard\api\FlightFareApi.csproj : error NU1102: Unable to find package Dapper with version (>= 2.2.0)
@@ -93,18 +93,17 @@ C:\Workspace\flight-fare-dashboard\api\FlightFareApi.csproj : error NU1102:   - 
 C:\Workspace\flight-fare-dashboard\api\FlightFareApi.csproj : error NU1102:   - Found 0 version(s) in C:\Program Files\dotnet\library-packs
 
 The build failed. Fix the build errors and run again.
-[36m[2025-08-02 10:24:56][0m Waiting for dashboard...
-[36m[2025-08-02 10:24:58][0m Waiting for dashboard...
-[36m[2025-08-02 10:25:01][0m Waiting for dashboard...
-[36m[2025-08-02 10:25:03][0m Waiting for dashboard...
-[36m[2025-08-02 10:25:05][0m Waiting for dashboard...
-[36m[2025-08-02 10:25:07][0m Waiting for dashboard...
-[36m[2025-08-02 10:25:10][0m Waiting for dashboard...
-[36m[2025-08-02 10:25:12][0m Waiting for dashboard...
-[36m[2025-08-02 10:25:14][0m Waiting for dashboard...
-[36m[2025-08-02 10:25:16][0m Attempting to open dashboard in default browser...
+[36m[2025-08-02 10:38:41][0m Waiting for dashboard...
+[36m[2025-08-02 10:38:43][0m Waiting for dashboard...
+[36m[2025-08-02 10:38:45][0m Waiting for dashboard...
+[36m[2025-08-02 10:38:47][0m Waiting for dashboard...
+[36m[2025-08-02 10:38:49][0m Waiting for dashboard...
+[36m[2025-08-02 10:38:52][0m Waiting for dashboard...
+[36m[2025-08-02 10:38:54][0m Waiting for dashboard...
+[36m[2025-08-02 10:38:56][0m Waiting for dashboard...
+[36m[2025-08-02 10:38:58][0m Attempting to open dashboard in default browser...
 Microsoft Windows [Version 10.0.19045.6093]
 (c) Microsoft Corporation. All rights reserved.
 
-C:\Workspace\flight-fare-dashboard>[36m[2025-08-02 10:25:16][0m All done. Access the dashboard at http://localhost:8080
-[36m[2025-08-02 10:25:16][0m Stopping...
+C:\Workspace\flight-fare-dashboard>[36m[2025-08-02 10:38:58][0m All done. Access the dashboard at http://localhost:8080
+[36m[2025-08-02 10:38:58][0m Stopping...
