@@ -46,7 +46,15 @@ popd > /dev/null
 
 log "Starting local web server..."
 pushd ui > /dev/null
-python3 -m http.server 8080 >> ../run_all.log 2>&1 &
+
+# Use python3 if available, otherwise fall back to python
+if command -v python3 >/dev/null; then
+  PYTHON_CMD=python3
+else
+  PYTHON_CMD=python
+fi
+
+$PYTHON_CMD -m http.server 8080 >> ../run_all.log 2>&1 &
 UI_PID=$!
 popd > /dev/null
 
@@ -69,6 +77,8 @@ if command -v xdg-open >/dev/null; then
   xdg-open http://localhost:8080 >> "$LOGFILE" 2>&1 &
 elif command -v open >/dev/null; then
   open http://localhost:8080 >> "$LOGFILE" 2>&1 &
+elif command -v python3 >/dev/null; then
+  python3 -m webbrowser http://localhost:8080 >> "$LOGFILE" 2>&1 &
 elif command -v python >/dev/null; then
   python -m webbrowser http://localhost:8080 >> "$LOGFILE" 2>&1 &
 else
