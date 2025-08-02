@@ -1,10 +1,11 @@
 {
   "devDependencies": {
-    "concurrently": "^9.2.0"
+    "concurrently": "^9.2.0",
+    "wait-on": "^7.2.0"
   },
   "name": "root",
   "version": "1.0.0",
   "scripts": {
-    "dev": "concurrently -k ^(\"dotnet\" \"watch\" \"run\" \"--project\" \"api/FlightFareApi.csproj\") ^(\"npm\" \"run\" \"build:css\" \"--prefix\" \"ui\") ^(\"npm\" \"run\" \"serve\" \"--prefix\" \"ui\")"
+    "dev": "concurrently --names \"api,css,serve\" --prefix \"[{name}]\" --prefix-colors \"cyan.bold,magenta.bold,green.bold\" --restart-tries -1 --restart-after 2000 --no-kill-others --no-kill-others-on-fail \"cd api && dotnet watch run --urls http://localhost:8000\" \"npm run build:css --prefix ui\" \"npm run serve --prefix ui\""
   }
 }
