@@ -1,0 +1,10 @@
+{
+  "devDependencies": {
+    "concurrently": "^9.2.0"
+  },
+  "name": "root",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "concurrently -k ^(\"dotnet\" \"watch\" \"run\" \"--project\" \"api/FlightFareApi.csproj\") ^(\"npm\" \"run\" \"build:css\" \"--prefix\" \"ui\") ^(\"npm\" \"run\" \"serve\" \"--prefix\" \"ui\")"
+  }
+}
