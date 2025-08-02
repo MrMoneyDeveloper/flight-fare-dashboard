@@ -4,16 +4,19 @@
   "description": "*Keep the original “messy-to-insight” storyline, swap the relational DB for **columnar Parquet storage**, and layer in richer data-science touches (eight flavours of normalisation + eight distinct visualisations).*",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:css": "npm exec -- tailwindcss -i ./src/input.css -o ./public/tailwind.css --watch",
+    "serve": "live-server --port=8080 --no-browser --watch=public,index.html"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@tailwindcss/cli": "^4.1.11",
     "autoprefixer": "^10.4.21",
+    "live-server": "^1.2.2",
     "postcss": "^8.5.6",
-    "tailwindcss": "^4.1.11",
-    "@tailwindcss/cli": "^4.1.11"
+    "tailwindcss": "^4.1.11"
   },
   "dependencies": {
     "chart.js": "^4.5.0",

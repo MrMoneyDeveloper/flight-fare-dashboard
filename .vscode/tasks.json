@@ -1,0 +1,31 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "backend",
+      "type": "shell",
+      "command": "dotnet",
+      "args": ["watch", "run", "--project", "api/FlightFareApi.csproj"],
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "frontend-css",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "build:css"],
+      "options": { "cwd": "${workspaceFolder}/ui" }
+    },
+    {
+      "label": "frontend-serve",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "serve"],
+      "options": { "cwd": "${workspaceFolder}/ui" }
+    },
+    {
+      "label": "dev-all",
+      "dependsOn": ["backend", "frontend-css", "frontend-serve"],
+      "runOptions": { "reevaluateOnRerun": true, "panel": "new" }
+    }
+  ]
+}
