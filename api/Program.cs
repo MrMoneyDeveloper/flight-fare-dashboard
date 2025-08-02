@@ -89,7 +89,7 @@ app.MapGet("/health", () => Results.Ok(new { status = "ok", ts = DateTime.UtcNow
    .WithTags("Utility");
 
 // Price history – simple sample query
-app.MapGet("/prices/history", async (IDbConnection conn) =>
+app.MapGet("/prices/history", async (IDbConnection conn, ILogger<Program> logger) =>
 {
     const string sql = """
         SELECT days_left, ROUND(AVG(price),0) AS avg_price
@@ -97,8 +97,16 @@ app.MapGet("/prices/history", async (IDbConnection conn) =>
         GROUP BY days_left
         ORDER BY days_left;
         """;
-    var rows = await conn.QueryAsync(sql);
-    return Results.Ok(rows);
+    try
+    {
+        var rows = await conn.QueryAsync(sql);
+        return Results.Ok(rows);
+    }
+    catch (Exception ex)
+    {
+        logger.LogWarning(ex, "Price history unavailable - returning empty set");
+        return Results.Ok(Array.Empty<object>());
+    }
 })
 .WithName("PriceHistory")
 .WithTags("Prices");
