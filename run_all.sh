@@ -75,7 +75,11 @@ $PYTHON_CMD -m http.server 8080 >> ../run_all.log 2>&1 &
 UI_PID=$!
 popd > /dev/null || exit
 
-trap 'log "Stopping..."; kill $API_PID $UI_PID' EXIT
+cleanup() {
+  log "Stopping..."
+  kill "$API_PID" "$UI_PID" >/dev/null 2>&1 || true
+}
+trap cleanup EXIT
 log "Processes started. API on http://localhost:8000, dashboard on http://localhost:8080"
 
 log "Checking dashboard availability..."
