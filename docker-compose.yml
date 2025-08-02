@@ -1,26 +1,26 @@
-version: '3.8'
+version: "3.9"
 services:
   api:
     image: mcr.microsoft.com/dotnet/sdk:8.0
-    working_dir: /src/api
+    working_dir: /workspace/api
     volumes:
-      - ./api:/src/api
-      - ./data:/src/data
-    command: ["dotnet", "run", "--urls", "http://0.0.0.0:8080"]
+      - .:/workspace
+    command: dotnet watch run --urls http://0.0.0.0:8000
     ports:
-      - "8000:8080"
+      - "8000:8000"
+
+  ui:
+    image: node:22
+    working_dir: /workspace/ui
+    volumes:
+      - .:/workspace
+    command: sh -c "npm install && npx concurrently \"npm run build:css\" \"npm run serve\""
+    ports:
+      - "8080:8080"
 
   etl:
     image: python:3.12-slim
-    working_dir: /src/etl
+    working_dir: /workspace
     volumes:
-      - ./etl:/src/etl
-      - ./data:/src/data
-    command: ["sleep", "infinity"]
-
-  nginx:
-    image: nginx:alpine
-    ports:
-      - "8080:80"
-    volumes:
-      - ./ui:/usr/share/nginx/html:ro
+      - .:/workspace
+    command: sh -c "pip install -r requirements.txt && python etl/extract_excel.py --source data/raw/airlines_flights_data.csv && python etl/transform.py"
