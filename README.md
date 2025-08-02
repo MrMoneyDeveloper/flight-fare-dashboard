@@ -9,8 +9,15 @@ The script now launches the API and static web server directly on your
 machine – no Docker required.
 
 ```bash
+# Start API and dashboard together
 ./run_all.sh
+
+# Or run components independently
+./run_all.sh --api-only   # only the API
+./run_all.sh --ui-only    # only the front-end
 ```
+
+Use `--no-api` or `--no-ui` to skip starting a component while running the other.
 
 Run the following commands from the repo root to generate data and launch the dashboard manually.
 
