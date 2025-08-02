@@ -18,10 +18,10 @@
   <!--  (pin to latest stable at the time of writing)  -->
   <!-- ──────────────────────────────────────────────── -->
   <ItemGroup>
-    <PackageReference Include="Dapper"                       Version="2.2.0"   />
-    <PackageReference Include="DuckDB.NET.Data"              Version="1.3.5"   />
-    <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="7.0.16"  />
-    <PackageReference Include="Swashbuckle.AspNetCore"       Version="6.6.7"   />
+    <PackageReference Include="Dapper"                       Version="2.1.66"  />
+    <PackageReference Include="DuckDB.NET.Data"              Version="1.3.2"   />
+    <!-- SignalR is bundled with ASP.NET Core; explicit package not required -->
+    <PackageReference Include="Swashbuckle.AspNetCore"       Version="6.7.0"   />
 
     <!-- JSON serialisation helpers (optional but common) -->
     <PackageReference Include="System.Text.Json"             Version="8.0.5"   />
